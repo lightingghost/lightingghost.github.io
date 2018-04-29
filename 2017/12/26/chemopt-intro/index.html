@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://lightingghost.github.io/img/chemopt/srnn.png">
 <meta property="og:image" content="https://lightingghost.github.io/img/chemopt/4rxn.png">
 <meta property="og:image" content="https://lightingghost.github.io/img/chemopt/ll.png">
-<meta property="og:updated_time" content="2017-12-29T23:09:38.000Z">
+<meta property="og:updated_time" content="2018-04-29T20:09:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Optimizing Chemical Reactions with Deep Reinforcement Learning">
 <meta name="twitter:description" content="Optimizing Chemical Reactions with Deep Reinforcement LearningACS Cent. Sci., 2017, 3 (12), pp 1337–1344  OverviewThere has been various efforts on applying the idea of machine learning and artificial">
@@ -261,7 +261,7 @@
                 <div class="image-caption">Figure 2. (A) Comparison of average regret of CMA-ES, Nelder–Mead simplex method, SNOBFIT, and DRO. The average regret is calculated as the average regret on 1000 random nonconvex functions. (B) The observed regret of 10 random nonconvex functions in which each line is the regret of one function.</div>
             </figure>
 <h2 id="Randomized-Policy-for-Deep-Exploration"><a href="#Randomized-Policy-for-Deep-Exploration" class="headerlink" title="Randomized Policy for Deep Exploration"></a>Randomized Policy for Deep Exploration</h2><p>Although our model optimizes nonconvex functions faster than CMA-ES, we observe that it sometimes get stuck in a local maximum (Figure 2B) because of the deterministic <em>greedy</em> policy, where greedy means making the locally optimal choice at each stage without exploration. In the context of reaction optimization, a greedy policy will stick to one reaction condition if it is better than any other conditions observed. However, the greedy policy will get trapped in a local optimum, failing to explore some regions in the space of experimental conditions, which may contain a better reaction condition that we are looking for. To further accelerate the optimization procedure in this aspect, we proposed a randomized exploration regime to explore different experimental conditions, in which randomization means drawing the decision randomly from a certain probability distribution. This idea came from the work of Van Roy and co-workers, which showed that deep exploration can be achieved from randomized value function estimates. The stochastic policy also addresses the problem of randomness in chemical reactions.<br>A stochastic recurrent neural network was used to model a randomized policy, which can be written as</p>
-<p>$$ h_{t+1},\Sigma_{t+1},\mu_{t+1}=\mathrm{RNN}<em>{\theta}\left(h</em>{t},r_{t},s_{t}\right)$$</p>
+ $$ h_{t+1},\Sigma_{t+1},\mu_{t+1}=\mathrm{RNN}_{\theta}\left(h_{t},r_{t},s_{t}\right)$$ 
 <p>$$s_{t+1}\sim\mathcal{N}\left(\mu_{t+1},\Sigma_{t+1}\right)$$</p>
 <p>Similar to the notations introduced before, the RNN is used to generate the mean $\mu_{t+1}$, and the covariance matrix $\Sigma_{t+1}$; the next state $s_{t+1}$ is then drawn from a multivariate Gaussian distribution of $\mathcal{N}(\mu_{t+1},\Sigma_{t+1})$ at time step $t + 1$. This approach achieved deep exploration in a computationally efficient way.</p>
 <p>Figure 3 compares between the greedy policy and the randomized policy on another group of simulated reactions. Although the randomized policy was slightly slower, it arrives to a better function value owing to its more efficient exploration strategy. Comparing the randomized policy with a deterministic one, the average regret was improved from 0.062 to 0.039, which shows a better chance of finding the global optimal conditions.</p>
@@ -298,7 +298,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2017-12-29T23:09:38.000Z" itemprop="dateUpdated">2017-12-29 15:09:38</time>
+    Last updated: <time datetime="2018-04-29T20:09:29.000Z" itemprop="dateUpdated">2018-04-29 13:09:29</time>
 </span><br>
 
 
