@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Optimizing Chemical Reactions with Deep Reinforcement Learning | Ocean of Yogurt | It would be perfect if it works (≡•̀·̯•́≡)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="deep learning,project,reinforcement learning,optimization,chemistry">
+    <meta name="description" content="Optimizing Chemical Reactions with Deep Reinforcement LearningACS Cent. Sci., 2017, 3 (12), pp 1337–1344  OverviewThere has been various efforts on applying the idea of machine learning and artificial">
+<meta name="keywords" content="deep learning,project,reinforcement learning,optimization,chemistry">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Optimizing Chemical Reactions with Deep Reinforcement Learning">
+<meta property="og:url" content="https://lightingghost.github.io/2017/12/26/chemopt-intro/index.html">
+<meta property="og:site_name" content="Ocean of Yogurt">
+<meta property="og:description" content="Optimizing Chemical Reactions with Deep Reinforcement LearningACS Cent. Sci., 2017, 3 (12), pp 1337–1344  OverviewThere has been various efforts on applying the idea of machine learning and artificial">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://lightingghost.github.io/img/chemopt/robo_chem.jpg">
+<meta property="og:image" content="https://lightingghost.github.io/img/chemopt/scheme.png">
+<meta property="og:image" content="https://lightingghost.github.io/img/chemopt/cmp.png">
+<meta property="og:image" content="https://lightingghost.github.io/img/chemopt/srnn.png">
+<meta property="og:image" content="https://lightingghost.github.io/img/chemopt/4rxn.png">
+<meta property="og:image" content="https://lightingghost.github.io/img/chemopt/ll.png">
+<meta property="og:updated_time" content="2017-12-29T23:09:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Optimizing Chemical Reactions with Deep Reinforcement Learning">
+<meta name="twitter:description" content="Optimizing Chemical Reactions with Deep Reinforcement LearningACS Cent. Sci., 2017, 3 (12), pp 1337–1344  OverviewThere has been various efforts on applying the idea of machine learning and artificial">
+<meta name="twitter:image" content="https://lightingghost.github.io/img/chemopt/robo_chem.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Ocean of Yogurt" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Zhenpeng Zhou</h5>
+          <a href="mailto:<html>&#122;&#104;&#101;&#110;&#112;&#51;&#110;&#103;&#122;&#104;&#111;&#117;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</html>" title="<html>&#122;&#104;&#101;&#110;&#112;&#51;&#110;&#103;&#122;&#104;&#111;&#117;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</html>" class="mail"><html>&#122;&#104;&#101;&#110;&#112;&#51;&#110;&#103;&#122;&#104;&#111;&#117;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</html></a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lightingghost" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Optimizing Chemical Reactions with Deep Reinforcement Learning</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Optimizing Chemical Reactions with Deep Reinforcement Learning</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-12-27T04:26:06.000Z" itemprop="datePublished" class="page-time">
+  2017-12-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Project/">Project</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Optimizing-Chemical-Reactions-with-Deep-Reinforcement-Learning"><span class="post-toc-number">1.</span> <span class="post-toc-text">Optimizing Chemical Reactions with Deep Reinforcement Learning</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Overview"><span class="post-toc-number">2.</span> <span class="post-toc-text">Overview</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Common-Ways-to-Optimize-Chemical-Reactions"><span class="post-toc-number">3.</span> <span class="post-toc-text">Common Ways to Optimize Chemical Reactions</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Our-method"><span class="post-toc-number">4.</span> <span class="post-toc-text">Our method</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Problem-Formulation"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">Problem Formulation</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#A-Decision-Making-Framwork"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">A Decision-Making Framwork</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Recurrent-Neural-Network-as-Policy"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">Recurrent Neural Network as Policy</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Results"><span class="post-toc-number">5.</span> <span class="post-toc-text">Results</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Simulated-Reactions"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">Simulated Reactions</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Randomized-Policy-for-Deep-Exploration"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">Randomized Policy for Deep Exploration</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Optimization-of-Real-Reactions"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">Optimization of Real Reactions</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Learning-for-Better-Optimization"><span class="post-toc-number">5.4.</span> <span class="post-toc-text">Learning for Better Optimization</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">6.</span> <span class="post-toc-text">Conclusion</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Code-Availability"><span class="post-toc-number">7.</span> <span class="post-toc-text">Code Availability</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-chemopt-intro"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Optimizing Chemical Reactions with Deep Reinforcement Learning</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-12-26 20:26:06" datetime="2017-12-27T04:26:06.000Z"  itemprop="datePublished">2017-12-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Project/">Project</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Optimizing-Chemical-Reactions-with-Deep-Reinforcement-Learning"><a href="#Optimizing-Chemical-Reactions-with-Deep-Reinforcement-Learning" class="headerlink" title="Optimizing Chemical Reactions with Deep Reinforcement Learning"></a>Optimizing Chemical Reactions with Deep Reinforcement Learning</h1><p><a href="http://pubs.acs.org/doi/full/10.1021/acscentsci.7b00492" target="_blank" rel="noopener">ACS Cent. Sci., 2017, 3 (12), pp 1337–1344</a></p>
+<p><img src="/img/chemopt/robo_chem.jpg" alt="TOC"></p>
+<h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p>There has been various efforts on applying the idea of machine learning and artificial intelligence on the field of physical science. In terms of chemistry or biological science, some of the major interests are:</p>
+<ul>
+<li>Predictions disease states by applying classification / regression models on experimental data.</li>
+<li>Using a neural network to theoretically predict properties of molecules. And, one step further, to design new molecules.</li>
+<li>Predict the product of a reaction. And retro-synthesis analysis.</li>
+</ul>
+<p>In this post, I will briefly introduction a recent work of applying the decision-making framework to solve real world problems in chemistry, specifically chemical reactions.</p>
+<h1 id="Common-Ways-to-Optimize-Chemical-Reactions"><a href="#Common-Ways-to-Optimize-Chemical-Reactions" class="headerlink" title="Common Ways to Optimize Chemical Reactions"></a>Common Ways to Optimize Chemical Reactions</h1><p>There have been various attempts to use automated algorithms to optimize chemical reactions. For example:</p>
+<ul>
+<li>Nelder-Mead Simplex Method</li>
+<li>Stable Noisy Optimization by Branch and Fit (SNOBFIT)</li>
+</ul>
+<p>Unfortunately, the most common practice among chemist to optimize a reaction is the one variable at a time (OVAT) method, which is changing a single experimental condition at a time while fixing all the others. This method often miss the optimal condition.</p>
+<h1 id="Our-method"><a href="#Our-method" class="headerlink" title="Our method"></a>Our method</h1><h2 id="Problem-Formulation"><a href="#Problem-Formulation" class="headerlink" title="Problem Formulation"></a>Problem Formulation</h2><p>A reaction can be viewed as a system taking multiple inputs (experimental conditions) and providing one desired output. Example inputs include temperature, solvent composition, pH, catalyst, and time. Example outputs include product yield, selectivity, purity, and cost. The reaction can be modeled by a function $r = R(s)$, where $s$ stands for the experimental conditions and $r$ denotes the objective, say, the yield. </p>
+<p>There are two properties makes optimizing chemical reactions a hard problem:</p>
+<ul>
+<li><p>chemical reactions are expensive and time-consuming to conduct</p>
+</li>
+<li><p>the outcome can vary largely, which is caused in part by measurement errors. </p>
+</li>
+</ul>
+<h2 id="A-Decision-Making-Framwork"><a href="#A-Decision-Making-Framwork" class="headerlink" title="A Decision-Making Framwork"></a>A Decision-Making Framwork</h2><p>We can formulate the process of finding the optimal reaction condition as a decision making problem, i.e., a Markov decision process (MDP) of $(\mathcal{S}, \mathcal{A}, \{P_{sa}\}, \mathcal{R})$:</p>
+<ul>
+<li><p>$\mathcal{S}$ denotes the set of <strong>states</strong> $s$. In the context of reaction optimization, $\mathcal{S}$ is the set of all possible combinations of experimental conditions.</p>
+</li>
+<li><p>$\mathcal{A}$ denotes the set of <strong>actions</strong> $a$. In the context of reaction optimization, $\mathcal{A}$ is the set of all changes that can be made to the experimental conditions, for example, increasing the temperature by 10 °C and so forth.</p>
+</li>
+<li><p>$ \{P_{sa} \} $  denotes the state transition probabilities. Concretely, $P_{sa}$ specifies the probability of transiting from $s$ to another state with action $a$. In the context of a chemical reaction, $P_{sa}$ specifies to what experimental conditions the reaction will move if we decide to make a change a to the experimental condition $s$. Intuitively, $P_{sa}$ measures the inaccuracy when operating the instrument. For example, the action of increasing the temperature by 10 °C may result in a temperature increase of 9.5–10.5 °C.</p>
+</li>
+<li><p>$\mathcal{R}$ denotes the reward function of state $s$ and action $a$. In the environment of a reaction, the reward $r$ is only a function of state $s$, i.e., a certain experimental condition $s$ (state) is mapped to yield $r$ (reward) by the reward function $r = R(s)$.</p>
+</li>
+</ul>
+<p>Our goal is to find a <strong>policy</strong> for this decision making problem. In the context of chemical reactions, the policy refers to the algorithm that interacts with the chemical reaction to obtain the current reaction condition and reaction yield, from which the next experimental conditions are chosen. Rigorously, we define the policy as the function $\pi$, which maps from the current experimental condition $s_t$ and history of the experiment record $\mathcal{H}_t$ to the next experimental condition, that is,</p>
+<p>$$ s_{t+1} = \pi (s_t,\mathcal{H}_t)$$</p>
+<p>where $\mathcal{H}_t$ is the history, and $t$ records the number of steps we have taken in reaction optimization.</p>
+<p>Here, we use a different defination of policy compared to the traditional one of $a = \pi (s)$. This is for simplicity and it has no conflict with the traditional policy defination, because in chemical reaction, we can define the action as the vector difference between two states: $a_t = s_{t+1} - s_t$.</p>
+<p>Intuitively, the optimization procedure can be explained as follows: We iteratively conduct an experiment under a specific experimental condition and record the yield. Then the policy function makes use of all the history of experimental record (what condition led to what yield) and tells us what experimental condition we should try next. This procedure is illustrated in Figure 1.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/chemopt/scheme.png" alt="Figure 1. Visualization of the Model Unrolled over Three Time Steps" title="">
+                </div>
+                <div class="image-caption">Figure 1. Visualization of the Model Unrolled over Three Time Steps</div>
+            </figure>
+<h2 id="Recurrent-Neural-Network-as-Policy"><a href="#Recurrent-Neural-Network-as-Policy" class="headerlink" title="Recurrent Neural Network as Policy"></a>Recurrent Neural Network as Policy</h2><p>We employs the recurrent neural network (RNN) to fit the policy function $\pi$ under the settings of chemical reactions. A RNN takes a similar form of the policy function can be written as follows:</p>
+<p>$$s_{t+1},h_{t+1}=\mathrm{RNN}_\theta(s_t,r_t,h_t)$$</p>
+<p>where at time step $t$, $h_t$ is the hidden state to model the history $\mathcal{H}_t$, $s_t$ denotes the state of reaction condition, and $r_t$ is the yield (reward) of reaction outcome. The policy of RNN maps the inputs at time step $t$ to outputs at time step $t + 1$. </p>
+<p>And the loss function is defined as the observed improvement:</p>
+<p>$$l(\theta) = -\sum_{t=1}^{T}\left(r_t-\max_{i&lt;t}r_i\right)$$</p>
+<p>The term inside the parentheses measures the improvement we can achieve by iteratively conducting different experiments. The loss function encourages reaching the optimal condition faster, in order to address the problem that chemical reactions are expensive and time-consuming to conduct.</p>
+<h1 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h1><h2 id="Simulated-Reactions"><a href="#Simulated-Reactions" class="headerlink" title="Simulated Reactions"></a>Simulated Reactions</h2><p>As mentioned earlier, chemical reactions are time-consuming to evaluate. Although our model can greatly accelerate the procedure, we still propose to first train the model on simulated reactions. A set of mixture Gaussian density functions is used as the simulated reactions environment $r = R(s)$. A Gaussian error term is added to the function to model the large variance property of chemical reaction measurements. The mock reactions can be written as:</p>
+<p>$$ y = \sum_{i=1}^N c_i (2\pi)^{-k/2}|\Sigma_i|^{-1/2} \exp\left(-\frac{1}{2}(x-\mu_i)^T\Sigma_i^{-1}(x-\mu_i)\right) +\varepsilon$$</p>
+<p>where $c_i$ is the coefficient, $\mu_i$ is the mean, and $\Sigma_i$ is the covariance of a multivariate Gaussian distribution; $k$ is the dimension of the variables. $\varepsilon$ is the error term, which is a random variable drawn from a Gaussian distribution with mean $0$ and variance $\sigma^2$.</p>
+<p>The motivation for using a mixture of Gaussian density functions comes from the idea that they can be used to approximate arbitrarily close all continuous functions on a bounded set. We assume that the response surface for most reactions is a continuous function, which can be well approximated by a mixture of Gaussian density functions. Besides, a mixture of Gaussian density functions often has multiple local minima. The rationale behind this is that the response surface of a chemical reaction may also have multiple local optima. As a result, we believe a mixture of Gaussian density functions can be a good class of function to simulate real reactions.</p>
+<p>We compared our model with several state-of-the-art blackbox optimization algorithms of covariance matrix adaption–evolution strategy (CMA-ES), Nelder–Mead simplex method, and stable noisy optimization by branch and fit (SNOBFIT) on another set of mixture Gaussian density functions that are unseen during training. This comparison is a classic approach for model evaluation in machine learning. We use “regret” to evaluate the performance of the models. The regret is defined as</p>
+<p>$$ \mathrm{regret}(t) = \max_s R(s) - r_t$$</p>
+<p>and it measures the gap between the current reward and the largest reward that is possible. Lower regret indicates better optimization. </p>
+<p>Figure 2A shows the average regret versus time steps of the two algorithms from which we see that our model outperforms CMA-ES significantly by reaching a lower regret value in fewer steps.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/chemopt/cmp.png" alt="Figure 2. (A) Comparison of average regret of CMA-ES, Nelder–Mead simplex method, SNOBFIT, and DRO. The average regret is calculated as the average regret on 1000 random nonconvex functions. (B) The observed regret of 10 random nonconvex functions in which each line is the regret of one function." title="">
+                </div>
+                <div class="image-caption">Figure 2. (A) Comparison of average regret of CMA-ES, Nelder–Mead simplex method, SNOBFIT, and DRO. The average regret is calculated as the average regret on 1000 random nonconvex functions. (B) The observed regret of 10 random nonconvex functions in which each line is the regret of one function.</div>
+            </figure>
+<h2 id="Randomized-Policy-for-Deep-Exploration"><a href="#Randomized-Policy-for-Deep-Exploration" class="headerlink" title="Randomized Policy for Deep Exploration"></a>Randomized Policy for Deep Exploration</h2><p>Although our model optimizes nonconvex functions faster than CMA-ES, we observe that it sometimes get stuck in a local maximum (Figure 2B) because of the deterministic <em>greedy</em> policy, where greedy means making the locally optimal choice at each stage without exploration. In the context of reaction optimization, a greedy policy will stick to one reaction condition if it is better than any other conditions observed. However, the greedy policy will get trapped in a local optimum, failing to explore some regions in the space of experimental conditions, which may contain a better reaction condition that we are looking for. To further accelerate the optimization procedure in this aspect, we proposed a randomized exploration regime to explore different experimental conditions, in which randomization means drawing the decision randomly from a certain probability distribution. This idea came from the work of Van Roy and co-workers, which showed that deep exploration can be achieved from randomized value function estimates. The stochastic policy also addresses the problem of randomness in chemical reactions.<br>A stochastic recurrent neural network was used to model a randomized policy, which can be written as</p>
+<p>$$ h_{t+1},\Sigma_{t+1},\mu_{t+1}=\mathrm{RNN}<em>{\theta}\left(h</em>{t},r_{t},s_{t}\right)$$</p>
+<p>$$s_{t+1}\sim\mathcal{N}\left(\mu_{t+1},\Sigma_{t+1}\right)$$</p>
+<p>Similar to the notations introduced before, the RNN is used to generate the mean $\mu_{t+1}$, and the covariance matrix $\Sigma_{t+1}$; the next state $s_{t+1}$ is then drawn from a multivariate Gaussian distribution of $\mathcal{N}(\mu_{t+1},\Sigma_{t+1})$ at time step $t + 1$. This approach achieved deep exploration in a computationally efficient way.</p>
+<p>Figure 3 compares between the greedy policy and the randomized policy on another group of simulated reactions. Although the randomized policy was slightly slower, it arrives to a better function value owing to its more efficient exploration strategy. Comparing the randomized policy with a deterministic one, the average regret was improved from 0.062 to 0.039, which shows a better chance of finding the global optimal conditions.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/chemopt/srnn.png" alt="Figure 3. Comparison of deterministic policy and randomized policy in the model of DRO." title="">
+                </div>
+                <div class="image-caption">Figure 3. Comparison of deterministic policy and randomized policy in the model of DRO.</div>
+            </figure>
+<h2 id="Optimization-of-Real-Reactions"><a href="#Optimization-of-Real-Reactions" class="headerlink" title="Optimization of Real Reactions"></a>Optimization of Real Reactions</h2><p>We carried out four experiments in microdroplets and recorded the production yield: The Pomeranz–Fritsch synthesis of isoquinoline, Friedländer synthesis of a substituted quinoline, the synthesis of ribose phosphate, and the reaction between 2,6-dichlorophenolindophenol (DCIP) and ascorbic acid. Our model outperformed the other two methods by reaching a higher yield in fewer steps. In both reactions, the model found the optimal condition within 40 steps, with the total time of 30 min required to optimize a reaction. (Figure 4)</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/chemopt/4rxn.png" alt="Figure 4. Performance comparison of CMA-ES, DRO, and OVAT methods on the microdroplet reaction of (A) Pomeranz–Fritsch synthesis of isoquinoline, (B) Friedländer synthesis of a substituted quinoline, (C) synthesis of ribose phosphate, and (D) the reaction between DCIP and ascorbic acid. The signal intensity can be converted into reaction yield with calibration." title="">
+                </div>
+                <div class="image-caption">Figure 4. Performance comparison of CMA-ES, DRO, and OVAT methods on the microdroplet reaction of (A) Pomeranz–Fritsch synthesis of isoquinoline, (B) Friedländer synthesis of a substituted quinoline, (C) synthesis of ribose phosphate, and (D) the reaction between DCIP and ascorbic acid. The signal intensity can be converted into reaction yield with calibration.</div>
+            </figure>
+<h2 id="Learning-for-Better-Optimization"><a href="#Learning-for-Better-Optimization" class="headerlink" title="Learning for Better Optimization"></a>Learning for Better Optimization</h2><p>We also observed that the algorithm is capable of learning while optimizing on real experiments. In other words, each time running a similar or even dissimilar reactions will improve the policy. To demonstrate this point, the model was first trained on the reaction of the Pomeranz–Fritsch synthesis of isoquinoline and then tested on the reaction of the Friedländer synthesis of substituted quinoline. Figure 5 compares the performance of the model before and after training. The policy after training showed a better performance by reaching a higher yield at a faster speed.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/chemopt/ll.png" alt="Figure 5. (A) The performance on Friedländer synthesis of DRO before and after training on the Pomeranz–Fritsch synthesis. (B) The performance on ribose phosphate synthesis of DRO before and after training on the Pomeranz–Fritsch and Friedländer syntheses." title="">
+                </div>
+                <div class="image-caption">Figure 5. (A) The performance on Friedländer synthesis of DRO before and after training on the Pomeranz–Fritsch synthesis. (B) The performance on ribose phosphate synthesis of DRO before and after training on the Pomeranz–Fritsch and Friedländer syntheses.</div>
+            </figure>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>Our model showed strong generalizability in two ways: First, based on optimization of a large family of functions, our optimization goal can be not only yield but also selectivity, purity, or cost, because all of them can be modeled by a function of experimental parameters. Second, a wide range of reactions can be accelerated by $10^3$ to $10^6$ times in microdroplets. Showing that a microdroplet reaction can be optimized in 30 min by our model, we therefore propose that a large class of reactions can be optimized by our model. The wide applicability of our model suggests it to be useful in both academic research and industrial production.</p>
+<h1 id="Code-Availability"><a href="#Code-Availability" class="headerlink" title="Code Availability"></a>Code Availability</h1><p>The code of this project can be found <a href="https://github.com/lightingghost/chemopt" target="_blank" rel="noopener">here</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-12-29T23:09:38.000Z" itemprop="dateUpdated">2017-12-29 15:09:38</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://lightingghost.github.io">
+            <img src="/img/avatar.jpg" alt="Zhenpeng Zhou">
+            Zhenpeng Zhou
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chemistry/">chemistry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/deep-learning/">deep learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/optimization/">optimization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/project/">project</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reinforcement-learning/">reinforcement learning</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lightingghost.github.io/2017/12/26/chemopt-intro/&title=《Optimizing Chemical Reactions with Deep Reinforcement Learning》 — Ocean of Yogurt&pic=https://lightingghost.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lightingghost.github.io/2017/12/26/chemopt-intro/&title=《Optimizing Chemical Reactions with Deep Reinforcement Learning》 — Ocean of Yogurt&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lightingghost.github.io/2017/12/26/chemopt-intro/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Optimizing Chemical Reactions with Deep Reinforcement Learning》 — Ocean of Yogurt&url=https://lightingghost.github.io/2017/12/26/chemopt-intro/&via=https://lightingghost.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lightingghost.github.io/2017/12/26/chemopt-intro/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/12/26/math-hexo/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">The Problem of Subscript in Hexo with Mathjax</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "U4Xs63qBdD4B0fbPDtNW2GIo-gzGzoHsz",
+            appKey: "Jhhjx1eEhlevAXkgLEuTkzyg",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+            lang: "en"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        Site UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        Site PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Zhenpeng Zhou &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lightingghost.github.io/2017/12/26/chemopt-intro/&title=《Optimizing Chemical Reactions with Deep Reinforcement Learning》 — Ocean of Yogurt&pic=https://lightingghost.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lightingghost.github.io/2017/12/26/chemopt-intro/&title=《Optimizing Chemical Reactions with Deep Reinforcement Learning》 — Ocean of Yogurt&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lightingghost.github.io/2017/12/26/chemopt-intro/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Optimizing Chemical Reactions with Deep Reinforcement Learning》 — Ocean of Yogurt&url=https://lightingghost.github.io/2017/12/26/chemopt-intro/&via=https://lightingghost.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lightingghost.github.io/2017/12/26/chemopt-intro/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://lightingghost.github.io/2017/12/26/chemopt-intro/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
