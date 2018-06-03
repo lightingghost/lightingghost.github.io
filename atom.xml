@@ -6,15 +6,44 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lightingghost.github.io/"/>
-  <updated>2018-04-29T19:54:05.000Z</updated>
+  <updated>2018-06-03T23:08:32.000Z</updated>
   <id>https://lightingghost.github.io/</id>
   
   <author>
-    <name>Zhenpeng Zhou</name>
+    <name>lightingghost</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>The Warp Drive -- Ergonomic Wireless Split Keyboard</title>
+    <link href="https://lightingghost.github.io/2018/06/02/wireless-split-keyboard/"/>
+    <id>https://lightingghost.github.io/2018/06/02/wireless-split-keyboard/</id>
+    <published>2018-06-03T04:57:17.000Z</published>
+    <updated>2018-06-03T23:08:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>First I would like to thank <a href="https://www.reddit.com/user/_spindle" target="_blank" rel="noopener">u/_spindle</a>, without whose <a href="https://github.com/ahtn/keyplus" target="_blank" rel="noopener">keyplus</a> it will be impossible to build this keyboard.</p><p>The idea comes from making a custom keyboard by myself. An ideal keyboard of me is conceived as follows:</p><ul><li><p>The keyboard should be wireless. I am tired of always having a keyboard cable on the table.</p></li><li><p>The keyboard should be ergonomic. The prototype I chose was ergodox, but I do not like the design of thumbs keys of ergodox: they take signifcant space, but are not easily reachable.</p></li><li><p>The wireless module should have a long lifetime. Therefore bluetooth is not suitable for a split design, because one of the keybooard has to be set to receiver mode if we want to use bluetooth, and significant energy consumption is expected in receiver mode.</p></li><li><p>The keyboard should be programmable, which is necessary for a small form factor keyboard.</p></li></ul><p>The first idea I came across is modding a Logitech unifying keyboard, as two unifying keyboards can be connected to one unifying receiver. I first tried to get the pcb of a unifying keyboard and tested this idea. Unfortunately, unifying is not a good choice, because two keys on seperated keyboards cannot be pressed together, this will make the keyboard non-programmable.</p><p>Later on I came across the project of <a href="https://github.com/ahtn/keyplus" target="_blank" rel="noopener">keyplus</a>, which is a keyboard controller firmware which enables using two keyboards as senders and a nother module as a receiver to build a wireless split setup. This is exactly what I need!</p><p>After having conceived the whole setup in my mind, I started by designing the layout of the keyboard. I am choosing all 1u keys to save space, and I designed the staggered key columns considering the length of different fingers.</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/wirelesskb/layout.png" alt="layout" title="">                </div>                <div class="image-caption">layout</div>            </figure><p>The next thing to do is to design the keyboard case. I myself like the feel of a metal case, but I am aware of that a full metal case will consist a Faraday cage, which will block the wireless signal (Look at the stupid F60 that iQunix made). I chose a combination of a metal top and a plastic bottom. Besides, I want the case to be unibody for aesthetic considerations.</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/wirelesskb/case_top.png" alt="case top" title="">                </div>                <div class="image-caption">case top</div>            </figure><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/wirelesskb/case_full.png" alt="full case" title="">                </div>                <div class="image-caption">full case</div>            </figure><p>I also designed the pcb, in order to connect the key switches, controller, and wireless module in a stable way.</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/wirelesskb/pcb.png" alt="pcb" title="">                </div>                <div class="image-caption">pcb</div>            </figure><p>After a long time waiting for the CNC of the case and the printing of the pcb, I have finally received all the components and assembled the two parts of the keyboard. </p><p><img src="/img/wirelesskb/IMG_0690.jpg" alt="keyboard"><br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/wirelesskb/IMG_0691.jpg" alt="keyboard" title="">                </div>                <div class="image-caption">keyboard</div>            </figure><br><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/img/wirelesskb/IMG_0692.jpg" alt="keyboard" title="">                </div>                <div class="image-caption">keyboard</div>            </figure></p><p>I do not have flat profile keycaps that can be used on this keyboard, what I am waiting for is the XDA canvas. Don’t let me down, Mito!</p><p>Some possible improvements in the future:</p><ul><li><p>Use nrf52840 as controller to support usb and wireless connectivity at the same time.</p></li><li><p>Use Kailh hot swappable sockets.</p></li><li><p>Use CNC instead of 3D printing for bottom case.</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;First I would like to thank &lt;a href=&quot;https://www.reddit.com/user/_spindle&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;u/_spindle&lt;/a&gt;, without whose &lt;
+      
+    
+    </summary>
+    
+      <category term="DIY" scheme="https://lightingghost.github.io/categories/DIY/"/>
+    
+    
+      <category term="wireless" scheme="https://lightingghost.github.io/tags/wireless/"/>
+    
+      <category term="keyboard" scheme="https://lightingghost.github.io/tags/keyboard/"/>
+    
+      <category term="DIY" scheme="https://lightingghost.github.io/tags/DIY/"/>
+    
+  </entry>
   
   <entry>
     <title>Debug cpp Modules Imported by Python</title>
